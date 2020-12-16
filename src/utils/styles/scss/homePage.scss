@@ -1,0 +1,207 @@
+@import "src/utils/styles/scss/variables";
+.home-page {
+
+
+  a {
+    text-decoration: none;
+    color: $darkGray;
+
+    &:hover {
+      color: $black;
+      text-decoration: underline;
+    }
+  }
+
+  .post-body {
+    .first-para {
+      &:first-letter {
+        font-size: 390%;
+        margin: 0px 10px 0px 0px;
+        float: left;
+        font-weight: bold;
+        line-height: initial;
+        color: $black;
+      }
+    }
+
+    .inline-card {
+      width: 60%;
+      margin: 15px 20px 15px 0px;
+
+      .card {
+        border: none;
+
+        .card-body {
+          box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.2), 0 0px 7px 0px rgba(0, 0, 0, 0.19);
+          border-radius: 0px 0px 2px 2px;
+          font-size: 14px;
+          color: $secondary;
+
+          .card-title {
+            color: $black;
+          }
+        }
+      }
+    }
+
+    footer {
+      color: $secondary;
+      font-family: 'Droid Sans';
+    }
+  }
+
+  .custom-search-box {
+    display: flex;
+
+    input {
+      border: none;
+
+      &:focus {
+        @at-root .custom-search-box {
+          border: 1px solid $secondary;
+        }
+        border-color: transparent;
+        box-shadow: none;
+      }
+    }
+
+    button {
+      float: left;
+      width: 20%;
+      background: transparent;
+      color: $secondary;
+      font-size: 17px;
+      border: none;
+      cursor: pointer;
+    }
+  }
+
+  .small {
+    font-size: 75%;
+  }
+
+  .tweetItem {
+    h5 {
+      display: inline;
+      font-size: 0.8rem;
+    }
+  }
+
+  .h6 {
+    font-size: 0.8rem;
+  }
+
+  .h5 {
+    font-size: 1rem;
+  }
+
+  .width-30 {
+    width: 30%;
+  }
+
+  .img-avatar {
+    vertical-align: middle;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    margin: 5px 0px 0px 60%;
+  }
+
+  .commentsItems {
+    span {
+      cursor: pointer;
+    }
+  }
+
+  .footer-sec {
+    margin-left: -60px;
+
+    hr {
+      margin: 5px 0px;
+      border-color: black;
+      border-width: 2px;
+    }
+  }
+
+  .social-icons {
+    i {
+      color: $iconsColor;
+      margin: 30px 20px 0px 0px;
+
+      &:hover {
+        color: black;
+      }
+    }
+  }
+
+  .btn-secondary {
+    background: white !important;
+
+    &:hover {
+      color: white !important;
+      background: black !important;
+    }
+  }
+
+  @media (max-width: 991px) {
+    .display-4 {
+      font-size: 2rem;
+    }
+    p {
+      font-size: 1rem;
+    }
+    .display-3 {
+      font-size: 2rem;
+    }
+    .footer-sec {
+      margin-left: 0px;
+
+    }
+    .img-avatar {
+      width: 30px;
+      height: 30px;
+    }
+    .post-body {
+      footer {
+        font-size: 14px;
+      }
+    }
+  }
+}
+
+.btn-google {
+  background-color: $google;
+  padding: 4px 5px;
+  margin: 0px 0px 0px 4px;
+  border-radius: 2px;
+  &:hover {
+    background-color: darken($google, 5%);
+  }
+}
+.btn-facebook {
+  background-color: $facebook;
+  padding: 4px 5px;
+  margin: 0px 0px 0px 4px;
+  border-radius: 2px;
+  &:hover {
+    background-color: darken($facebook, 5%);
+  }
+}
+.btn-twitter {
+  background-color: $twitter;
+  padding: 4px 5px;
+  margin: 0px 0px 0px 4px;
+  border-radius: 2px;
+  &:hover {
+    background-color: darken($twitter, 5%);
+  }
+}
+.btn-whatsapp {
+  background-color: $whatsapp;
+  padding: 4px 5px;
+  margin: 0px 0px 0px 4px;
+  border-radius: 2px;
+  &:hover {
+    background-color: darken($whatsapp, 5%);
+  }
+}

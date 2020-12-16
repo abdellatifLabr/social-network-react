@@ -1,0 +1,33 @@
+@import "utils/styles/scss/variables";
+@import "~bootstrap/scss/bootstrap";
+@import '~font-awesome/css/font-awesome.min.css';
+$theme-colors: (
+        'gray': $gray
+);
+html,body {
+  margin: 0;
+  font-family: 'Poppins', 'Droid Sans', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+h1,h2,h3,h4,h5,h6 {
+  font-family: 'Poppins';
+}
+p {
+  font-family: 'Droid Sans';
+  font-size: 1.2rem;
+  color: $gray
+}
+.display-4 {
+  font-size: 3rem;
+}
+.btn-outline-secondary {
+  &:hover {
+    color: #ffffff;
+  }
+}
+.w-12{
+  width: 12%!important;
+}
+
+@import "utils/styles/scss/homePage";
