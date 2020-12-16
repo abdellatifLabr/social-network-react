@@ -1,15 +1,29 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+import '../../utils/styles/scss/Header.scss';
+
 const Header = () => (
-  <div>
+  <div className="header">
     <div className="d-flex justify-content-between py-lg-4 py-2">
       <Link to="/">
         <img src="/media/logo.png" width={50} height="auto" alt="app logo" />
       </Link>
-      <img src="/media/menu-icon.png" width="auto" height="17px" alt="menu" />
+      <ul>
+        <li>
+          <Link to="login">
+            <button type="button">Login</button>
+          </Link>
+        </li>
+        <li>
+          <Link to="login">
+            <button type="button">Register</button>
+          </Link>
+        </li>
+      </ul>
+      {/* <img src="/media/menu-icon.png" width="auto" height="17px" alt="menu" /> */}
     </div>
-    <div className="pb-2 pb-4">
+    {/* <div className="pb-2 pb-4">
       <img
         style={{ maxHeight: '280px' }}
         src="/media/banner.png"
@@ -17,7 +31,7 @@ const Header = () => (
         height="100%"
         alt="bannerImage"
       />
-    </div>
+    </div> */}
   </div>
 );
 
