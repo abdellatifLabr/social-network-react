@@ -1,23 +1,45 @@
 import React, { useState } from 'react';
 import { Form, Button } from 'react-bootstrap';
 import { useFormik } from 'formik';
+import { useMutation, gql } from '@apollo/client';
+
+const LOGIN_MUTATION = gql`
+  mutation Login($email: String!, $password: String!) {
+    tokenAuth(email: $email, password: $password) {
+      success
+      errors
+      token
+      refreshToken
+    }
+  }
+`;
 
 export default function Loginpage() {
-  const [errors, setErrors] = useState(null);
+  const [_errors, setErrors] = useState(null);
+  const [login, { loading }] = useMutation(LOGIN_MUTATION, {
+    onCompleted: (data) => {
+      const { success, errors, token, refreshToken } = data.tokenAuth;
 
-  const onLoginFormSubmit = (values, { setSubmitting }) => {
-    setSubmitting(true);
-    console.log(values);
-    setErrors({
-      email: [{ message: 'this is an email error' }],
-      password: [{ message: 'this is an password error' }],
-    });
-    setSubmitting(false);
+      if (errors) setErrors(errors);
+
+      if (success) {
+        localStorage.setItem('access_token', token);
+        localStorage.setItem('refresh_token', refreshToken);
+
+        // fetch user
+        // set user state
+      }
+    },
+  });
+
+  const onSubmit = (values) => {
+    setErrors(null);
+    login({ variables: { email: values.email, password: values.password } });
   };
 
   const formik = useFormik({
     initialValues: { email: '', password: '' },
-    onSubmit: onLoginFormSubmit,
+    onSubmit,
   });
 
   return (
@@ -32,10 +54,10 @@ export default function Loginpage() {
             onBlur={formik.handleBlur}
             value={formik.values.email}
             placeholder="Enter email"
-            isInvalid={errors && errors.email}
+            isInvalid={_errors && _errors.email}
           />
           <Form.Control.Feedback type="invalid">
-            {errors && errors.email[0].message}
+            {_errors && <ErrorsList errors={_errors} fieldName="email" />}
           </Form.Control.Feedback>
         </Form.Group>
         <Form.Group controlId="formBasicPassword">
@@ -47,16 +69,29 @@ export default function Loginpage() {
             onBlur={formik.handleBlur}
             value={formik.values.password}
             placeholder="Password"
-            isInvalid={errors && errors.password}
+            isInvalid={_errors && _errors.password}
           />
           <Form.Control.Feedback type="invalid">
-            {errors && errors.password[0].message}
+            {_errors && <ErrorsList errors={_errors} fieldName="password" />}
           </Form.Control.Feedback>
         </Form.Group>
-        <Button variant="primary" type="submit" disabled={formik.isSubmitting}>
+        {_errors && <ErrorsList errors={_errors} fieldName="nonFieldErrors" />}
+        <Button variant="primary" type="submit" disabled={loading}>
           Log In
         </Button>
       </Form>
     </div>
+  );
+}
+
+function ErrorsList({ errors, fieldName }) {
+  if (!errors[fieldName]) return null;
+
+  return (
+    <ul className="text-danger">
+      {errors[fieldName].map((error) => (
+        <li key={error.code}>{error.message}</li>
+      ))}
+    </ul>
   );
 }
