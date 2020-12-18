@@ -2,9 +2,20 @@ import { gql } from '@apollo/client';
 import apolloClient from '../../graphql';
 
 export const types = {
-  SET_USER: 'SET_USER',
+  SIGN_IN_USER: 'SIGN_IN_USER',
   SIGN_OUT_USER: 'SIGN_OUT_USER',
 };
+
+const LOGIN_MUTATION = gql`
+  mutation Login($email: String!, $password: String!) {
+    tokenAuth(email: $email, password: $password) {
+      success
+      errors
+      token
+      refreshToken
+    }
+  }
+`;
 
 const ME_QUERY = gql`
   query {
@@ -20,12 +31,26 @@ const ME_QUERY = gql`
   }
 `;
 
-export const fetchUser = () => async (dispatch) => {
-  const res = await apolloClient.query({ query: ME_QUERY });
-  dispatch({
-    type: types.SET_USER,
-    payload: res.data.me,
+export const signInUser = (email, password) => async (dispatch) => {
+  const res = await apolloClient.mutate({
+    mutation: LOGIN_MUTATION,
+    variables: { email, password },
   });
+  const { success, errors, token, refreshToken } = res.data.tokenAuth;
+
+  if (errors) throw errors;
+
+  if (success) {
+    localStorage.setItem('access_token', token);
+    localStorage.setItem('refresh_token', refreshToken);
+
+    const { data } = await apolloClient.query({ query: ME_QUERY });
+
+    dispatch({
+      type: types.SIGN_IN_USER,
+      payload: data.me,
+    });
+  }
 };
 
 const REVOKE_TOKEN_MUTATION = gql`

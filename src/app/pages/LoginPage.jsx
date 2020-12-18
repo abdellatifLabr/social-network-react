@@ -1,43 +1,26 @@
 import React, { useState } from 'react';
 import { Form, Button } from 'react-bootstrap';
 import { useFormik } from 'formik';
-import { useMutation, gql } from '@apollo/client';
 import { useDispatch } from 'react-redux';
 
-import { fetchUser } from '../../store/actions/user.actions';
-
-const LOGIN_MUTATION = gql`
-  mutation Login($email: String!, $password: String!) {
-    tokenAuth(email: $email, password: $password) {
-      success
-      errors
-      token
-      refreshToken
-    }
-  }
-`;
+import { signInUser } from '../../store/actions/user.actions';
 
 export default function LoginPage() {
   const dispatch = useDispatch();
-  const [_errors, setErrors] = useState(null);
-  const [login, { loading }] = useMutation(LOGIN_MUTATION, {
-    onCompleted: (data) => {
-      const { success, errors, token, refreshToken } = data.tokenAuth;
-
-      if (errors) setErrors(errors);
-
-      if (success) {
-        localStorage.setItem('access_token', token);
-        localStorage.setItem('refresh_token', refreshToken);
-
-        dispatch(fetchUser());
-      }
-    },
-  });
+  const [errors, setErrors] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const onSubmit = (values) => {
-    setErrors(null);
-    login({ variables: { email: values.email, password: values.password } });
+    setLoading(true);
+    dispatch(signInUser(values.email, values.password))
+      .then(() => {
+        setLoading(false);
+        // navigate to feed page
+      })
+      .catch((err) => {
+        setLoading(false);
+        setErrors(err);
+      });
   };
 
   const formik = useFormik({
@@ -57,10 +40,10 @@ export default function LoginPage() {
             onBlur={formik.handleBlur}
             value={formik.values.email}
             placeholder="Enter email"
-            isInvalid={_errors && _errors.email}
+            isInvalid={errors && errors.email}
           />
           <Form.Control.Feedback type="invalid">
-            {_errors && <ErrorsList errors={_errors} fieldName="email" />}
+            {errors && <ErrorsList errors={errors} fieldName="email" />}
           </Form.Control.Feedback>
         </Form.Group>
         <Form.Group controlId="formBasicPassword">
@@ -72,13 +55,13 @@ export default function LoginPage() {
             onBlur={formik.handleBlur}
             value={formik.values.password}
             placeholder="Password"
-            isInvalid={_errors && _errors.password}
+            isInvalid={errors && errors.password}
           />
           <Form.Control.Feedback type="invalid">
-            {_errors && <ErrorsList errors={_errors} fieldName="password" />}
+            {errors && <ErrorsList errors={errors} fieldName="password" />}
           </Form.Control.Feedback>
         </Form.Group>
-        {_errors && <ErrorsList errors={_errors} fieldName="nonFieldErrors" />}
+        {errors && <ErrorsList errors={errors} fieldName="nonFieldErrors" />}
         <Button variant="primary" type="submit" disabled={loading}>
           Log In
         </Button>
