@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import { Form, Button } from 'react-bootstrap';
 import { useFormik } from 'formik';
 import { useMutation, gql } from '@apollo/client';
+import { useDispatch } from 'react-redux';
+
+import { fetchUser } from '../../store/actions/user.actions';
 
 const LOGIN_MUTATION = gql`
   mutation Login($email: String!, $password: String!) {
@@ -15,6 +18,7 @@ const LOGIN_MUTATION = gql`
 `;
 
 export default function Loginpage() {
+  const dispatch = useDispatch();
   const [_errors, setErrors] = useState(null);
   const [login, { loading }] = useMutation(LOGIN_MUTATION, {
     onCompleted: (data) => {
@@ -26,8 +30,7 @@ export default function Loginpage() {
         localStorage.setItem('access_token', token);
         localStorage.setItem('refresh_token', refreshToken);
 
-        // fetch user
-        // set user state
+        dispatch(fetchUser());
       }
     },
   });
