@@ -17,7 +17,7 @@ const LOGIN_MUTATION = gql`
   }
 `;
 
-export default function Loginpage() {
+export default function LoginPage() {
   const dispatch = useDispatch();
   const [_errors, setErrors] = useState(null);
   const [login, { loading }] = useMutation(LOGIN_MUTATION, {
