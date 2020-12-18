@@ -1,25 +1,26 @@
-import { gql } from '@apollo/client';
-
 import apolloClient from '../../graphql';
+import * as mutations from '../graphql/mutations/user.mutations';
 
-const REFRESH_TOKEN_MUTATION = gql`
-  mutation RefreshToken($refresh: String!) {
-    refreshToken(refreshToken: $refresh) {
-      token
-      success
-      errors
-    }
-  }
-`;
+export async function signIn(email, password) {
+  const res = await apolloClient.mutate({
+    mutation: mutations.LOGIN,
+    variables: { email, password },
+  });
+  return res.data.tokenAuth;
+}
 
 export async function refreshToken(refresh) {
   const res = await apolloClient.mutate({
-    mutation: REFRESH_TOKEN_MUTATION,
+    mutation: mutations.REFRESH_TOKEN,
     variables: { refresh },
   });
   return res.data.refreshToken;
 }
 
-export function revokeToken() {
-  //
+export async function revokeToken(refresh) {
+  const res = await apolloClient.mutate({
+    mutation: mutations.REVOKE_TOKEN,
+    variables: { refresh },
+  });
+  return res.data.refreshToken;
 }
