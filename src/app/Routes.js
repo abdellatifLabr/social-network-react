@@ -8,7 +8,7 @@ const RegisterPage = lazy(() => import('./pages/RegisterPage'));
 const Routes = () => (
   <Suspense fallback={() => <div>Loading...</div>}>
     <Switch>
-      <Route path="/" component={LoginPage} exact />
+      <Route path="/login" component={LoginPage} exact />
       <Route path="/register" component={RegisterPage} exact />
       <Redirect to="/" />
     </Switch>

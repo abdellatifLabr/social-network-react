@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import { Form, Button } from 'react-bootstrap';
 import { useFormik } from 'formik';
 import { useDispatch } from 'react-redux';
@@ -7,6 +8,7 @@ import { register } from '../../lib/providers/user.provider';
 import { fetchUser } from '../../store/actions/user.actions';
 
 export default function RegisterPage() {
+  const history = useHistory();
   const dispatch = useDispatch();
   const [errors, setErrors] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -24,7 +26,7 @@ export default function RegisterPage() {
 
       dispatch(fetchUser())
         .then(() => {
-          // navigate to feed page
+          history.push('/');
         })
         .catch((err) => {
           setErrors(err);

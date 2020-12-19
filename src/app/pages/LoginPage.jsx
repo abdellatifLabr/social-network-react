@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import { Form, Button } from 'react-bootstrap';
 import { useFormik } from 'formik';
 import { useDispatch } from 'react-redux';
@@ -6,6 +7,7 @@ import { useDispatch } from 'react-redux';
 import { signInUser } from '../../store/actions/user.actions';
 
 export default function LoginPage() {
+  const history = useHistory();
   const dispatch = useDispatch();
   const [errors, setErrors] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -15,7 +17,7 @@ export default function LoginPage() {
     dispatch(signInUser(values.email, values.password))
       .then(() => {
         setLoading(false);
-        // navigate to feed page
+        history.push('/');
       })
       .catch((err) => {
         setLoading(false);

@@ -1,17 +1,18 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { signOutUser } from '../../store/actions/user.actions';
 import '../../utils/styles/scss/Header.scss';
 
 export default function Header() {
+  const history = useHistory();
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
 
   const onSignOut = () => {
     dispatch(signOutUser()).then(() => {
-      // navigate to home page
+      history.push('/login');
     });
   };
 
