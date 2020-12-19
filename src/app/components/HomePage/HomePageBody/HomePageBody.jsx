@@ -1,4 +1,5 @@
-import React, { Component } from 'react';
+import React from 'react';
+
 import PageContent from './PageContent/PageContent';
 import RightSideBar from './PageFilters/RightSideBar';
 
