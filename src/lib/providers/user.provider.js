@@ -24,3 +24,11 @@ export async function revokeToken(refresh) {
   });
   return res.data.refreshToken;
 }
+
+export async function register(user) {
+  const res = await apolloClient.mutate({
+    mutation: mutations.REGISTER,
+    variables: { ...user },
+  });
+  return res.data.register;
+}

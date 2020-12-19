@@ -29,3 +29,26 @@ export const REVOKE_TOKEN = gql`
     }
   }
 `;
+
+export const REGISTER = gql`
+  mutation Register(
+    $email: String!
+    $username: String!
+    $fullName: String!
+    $password1: String!
+    $password2: String!
+  ) {
+    register(
+      email: $email
+      username: $username
+      fullName: $fullName
+      password1: $password1
+      password2: $password2
+    ) {
+      success
+      errors
+      token
+      refreshToken
+    }
+  }
+`;

@@ -6,6 +6,7 @@ import { revokeToken, signIn } from '../../lib/providers/user.provider';
 export const types = {
   SIGN_IN_USER: 'SIGN_IN_USER',
   SIGN_OUT_USER: 'SIGN_OUT_USER',
+  FETCH_USER: 'FETCH_USER',
 };
 
 const ME_QUERY = gql`
@@ -51,5 +52,14 @@ export const signOutUser = () => async (dispatch) => {
   dispatch({
     type: types.SIGN_OUT_USER,
     payload: null,
+  });
+};
+
+export const fetchUser = () => async (dispatch) => {
+  const res = await apolloClient.query({ query: ME_QUERY });
+
+  dispatch({
+    type: types.FETCH_USER,
+    payload: res.data.me,
   });
 };
