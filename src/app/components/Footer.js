@@ -3,7 +3,7 @@ import SubFooter from './Footer/SubFooter';
 
 const Footer = () => (
   <div className="home-page">
-    <div
+    {/* <div
       className="container-fluid py-5"
       style={{ backgroundColor: '#e8edef' }}
     >
@@ -22,7 +22,7 @@ const Footer = () => (
           </div>
         </div>
       </div>
-    </div>
+    </div> */}
     <SubFooter />
   </div>
 );

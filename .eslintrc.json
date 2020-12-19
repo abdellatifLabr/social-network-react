@@ -29,6 +29,7 @@
     "consistent-return": "off",
     "import/no-dynamic-require": "off",
     "import/no-cycle": "off",
+    "jsx-a11y/anchor-is-valid": "off",
     "react/no-unescaped-entities": "off",
     "react/jsx-filename-extension": "off",
     "react/prop-types": "off"

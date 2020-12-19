@@ -1,38 +1,65 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 
+import { signOutUser } from '../../store/actions/user.actions';
 import '../../utils/styles/scss/Header.scss';
 
-const Header = () => (
-  <div className="header">
-    <div className="d-flex justify-content-between py-lg-4 py-2">
-      <Link to="/">
-        <img src="/media/logo.png" width={50} height="auto" alt="app logo" />
-      </Link>
-      <ul>
-        <li>
-          <Link to="login">
-            <button type="button">Login</button>
-          </Link>
-        </li>
-        <li>
-          <Link to="login">
-            <button type="button">Register</button>
-          </Link>
-        </li>
-      </ul>
-      {/* <img src="/media/menu-icon.png" width="auto" height="17px" alt="menu" /> */}
-    </div>
-    {/* <div className="pb-2 pb-4">
-      <img
-        style={{ maxHeight: '280px' }}
-        src="/media/banner.png"
-        width="100%"
-        height="100%"
-        alt="bannerImage"
-      />
-    </div> */}
-  </div>
-);
+export default function Header() {
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.user);
 
-export default Header;
+  const onSignOut = () => {
+    dispatch(signOutUser()).then(() => {
+      // navigate to home page
+    });
+  };
+
+  return (
+    <div className="header">
+      <div className="d-flex justify-content-between py-lg-4 py-2">
+        <Link to="/">
+          <img src="/media/logo.png" width={50} height="auto" alt="app logo" />
+        </Link>
+
+        {!user && (
+          <ul>
+            <li>
+              <Link to="/">
+                <button type="button">Login</button>
+              </Link>
+            </li>
+            <li>
+              <Link to="/register">
+                <button type="button">Register</button>
+              </Link>
+            </li>
+          </ul>
+        )}
+
+        {user && (
+          <ul>
+            <li>
+              <Link to="/">{user.fullName}</Link>
+            </li>
+            <li>
+              <a href="#" onClick={onSignOut}>
+                Sign Out
+              </a>
+            </li>
+          </ul>
+        )}
+        {/* <img src="/media/menu-icon.png" width="auto" height="17px" alt="menu" /> */}
+      </div>
+      {/* <div className="pb-2 pb-4">
+        <img
+          style={{ maxHeight: '280px' }}
+          src="/media/banner.png"
+          width="100%"
+          height="100%"
+          alt="bannerImage"
+        />
+      </div> */}
+    </div>
+  );
+}
