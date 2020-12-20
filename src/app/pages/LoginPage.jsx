@@ -4,7 +4,7 @@ import { Form, Button } from 'react-bootstrap';
 import { useFormik } from 'formik';
 import { useDispatch } from 'react-redux';
 
-import { signInUser } from '../../store/actions/user.actions';
+import { signInUser } from '../../store/actions/user';
 
 export default function LoginPage() {
   const history = useHistory();
@@ -33,7 +33,8 @@ export default function LoginPage() {
   return (
     <div className="w-50 mx-auto mt-lg-5">
       <Form onSubmit={formik.handleSubmit}>
-        <Form.Group controlId="formBasicEmail">
+        {/* Email */}
+        <Form.Group>
           <Form.Label>Email address</Form.Label>
           <Form.Control
             type="email"
@@ -45,10 +46,12 @@ export default function LoginPage() {
             isInvalid={errors && errors.email}
           />
           <Form.Control.Feedback type="invalid">
-            {errors && <ErrorsList errors={errors} fieldName="email" />}
+            {errors && <ErrorsList field="email" errors={errors} />}
           </Form.Control.Feedback>
         </Form.Group>
-        <Form.Group controlId="formBasicPassword">
+
+        {/* Password */}
+        <Form.Group>
           <Form.Label>Password</Form.Label>
           <Form.Control
             type="password"
@@ -60,10 +63,13 @@ export default function LoginPage() {
             isInvalid={errors && errors.password}
           />
           <Form.Control.Feedback type="invalid">
-            {errors && <ErrorsList errors={errors} fieldName="password" />}
+            {errors && <ErrorsList field="password" errors={errors} />}
           </Form.Control.Feedback>
         </Form.Group>
-        {errors && <ErrorsList errors={errors} fieldName="nonFieldErrors" />}
+
+        {/* Non field errors */}
+        {errors && <ErrorsList field="nonFieldErrors" errors={errors} />}
+
         <Button variant="primary" type="submit" disabled={loading}>
           Log In
         </Button>
@@ -72,12 +78,12 @@ export default function LoginPage() {
   );
 }
 
-function ErrorsList({ errors, fieldName }) {
-  if (!errors[fieldName]) return null;
+function ErrorsList({ errors, field }) {
+  if (!errors[field]) return null;
 
   return (
     <ul className="text-danger">
-      {errors[fieldName].map((error) => (
+      {errors[field].map((error) => (
         <li key={error.code}>{error.message}</li>
       ))}
     </ul>

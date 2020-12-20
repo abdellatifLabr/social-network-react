@@ -1,7 +1,7 @@
 import { gql } from '@apollo/client';
 
 import apolloClient from '../../graphql';
-import { revokeToken, signIn } from '../../lib/providers/user.provider';
+import { revokeToken, signIn } from '../../lib/providers/user';
 
 export const types = {
   SIGN_IN_USER: 'SIGN_IN_USER',

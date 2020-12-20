@@ -3,8 +3,8 @@ import ReactDOM from 'react-dom';
 import { ApolloProvider } from '@apollo/client';
 import { Provider } from 'react-redux';
 
-import { isUserAuthenticated } from './lib/providers/user.provider';
-import { fetchUser } from './store/actions/user.actions';
+import { isUserAuthenticated } from './lib/providers/user';
+import { fetchUser } from './store/actions/user';
 import apolloClient from './graphql';
 import store from './store';
 import './index.scss';

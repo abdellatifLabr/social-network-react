@@ -3,7 +3,7 @@ import { createUploadLink } from 'apollo-upload-client';
 import { setContext } from '@apollo/client/link/context';
 
 import { isTokenExpired } from '../lib/utils';
-import { refreshToken } from '../lib/providers/user.provider';
+import { refreshToken } from '../lib/providers/user';
 
 const httpLink = createUploadLink({
   uri: process.env.REACT_APP_GRAPHQL_ENDPOINT,

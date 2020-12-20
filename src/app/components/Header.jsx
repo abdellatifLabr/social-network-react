@@ -2,7 +2,7 @@ import React from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { signOutUser } from '../../store/actions/user.actions';
+import { signOutUser } from '../../store/actions/user';
 import '../../utils/styles/scss/Header.scss';
 
 export default function Header() {

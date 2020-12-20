@@ -4,8 +4,8 @@ import { Form, Button } from 'react-bootstrap';
 import { useFormik } from 'formik';
 import { useDispatch } from 'react-redux';
 
-import { register } from '../../lib/providers/user.provider';
-import { fetchUser } from '../../store/actions/user.actions';
+import { register } from '../../lib/providers/user';
+import { fetchUser } from '../../store/actions/user';
 
 export default function RegisterPage() {
   const history = useHistory();
@@ -134,7 +134,7 @@ export default function RegisterPage() {
         </Form.Group>
 
         {/* Non field errors */}
-        {errors && <ErrorsList errors={errors} fieldName="nonFieldErrors" />}
+        {errors && <ErrorsList field="nonFieldErrors" errors={errors} />}
 
         <Button variant="primary" type="submit" disabled={loading}>
           Register
