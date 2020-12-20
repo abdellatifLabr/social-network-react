@@ -26,7 +26,7 @@ export default function Header() {
         {!user && (
           <ul>
             <li>
-              <Link to="/">
+              <Link to="/login">
                 <button type="button">Login</button>
               </Link>
             </li>
