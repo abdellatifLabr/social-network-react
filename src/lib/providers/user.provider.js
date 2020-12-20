@@ -32,3 +32,9 @@ export async function register(user) {
   });
   return res.data.register;
 }
+
+export function isUserAuthenticated() {
+  const token = localStorage.getItem('access_token');
+  const refresh = localStorage.getItem('refresh_token');
+  return !!(token && refresh);
+}
