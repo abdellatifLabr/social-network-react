@@ -13,7 +13,6 @@ const ME_QUERY = gql`
   query {
     me {
       id
-      pk
       email
       username
       fullName
