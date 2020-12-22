@@ -1,0 +1,53 @@
+import React from 'react';
+import { Row, Col, CardColumns } from 'react-bootstrap';
+import { gql, useQuery } from '@apollo/client';
+
+import PostCard from '../components/PostCard';
+
+const POSTS_QUERY = gql`
+  query Posts {
+    posts {
+      edges {
+        node {
+          id
+          title
+          imageUrl
+          summary
+          createdSince
+          user {
+            fullName
+          }
+        }
+      }
+    }
+  }
+`;
+
+export default function HomePage() {
+  const { loading, data } = useQuery(POSTS_QUERY);
+
+  if (loading) return <div>loading...</div>;
+
+  return (
+    <Row>
+      <Col md={12}>
+        <div className="d-flex justify-content-between">
+          <div>
+            <h4 className="font-weight-bold text-uppercase mb-4">
+              Recent Posts
+            </h4>
+          </div>
+        </div>
+      </Col>
+      <Col md={12}>
+        <CardColumns>
+          {data.posts.edges
+            .map((edge) => edge.node)
+            .map((post) => (
+              <PostCard key={post.id} post={post} />
+            ))}
+        </CardColumns>
+      </Col>
+    </Row>
+  );
+}
