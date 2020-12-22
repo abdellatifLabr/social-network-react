@@ -1,8 +1,9 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { Row, Col, Image, Button } from 'react-bootstrap';
+import { Row, Col, Image, Button, CardColumns } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import { gql, useQuery } from '@apollo/client';
+
+import PostCard from '../components/PostCard';
 
 const POSTS_QUERY = gql`
   query MyPosts {
@@ -11,8 +12,13 @@ const POSTS_QUERY = gql`
         node {
           id
           title
+          imageUrl
           summary
           createdSince
+          user {
+            id
+            fullName
+          }
         }
       }
     }
@@ -37,9 +43,9 @@ export default function ProfilePage() {
           <small>@{user.username}</small>
         </Col>
         <Col md={12}>
-          <div className="d-flex justify-content-between">
+          <div className="d-flex justify-content-between mb-4">
             <div>
-              <h2 className="font-weight-bold text-uppercase mb-4">My Posts</h2>
+              <h3 className="font-weight-bold text-uppercase">My Posts</h3>
             </div>
             <div>
               <Button>+ New Post</Button>
@@ -48,21 +54,15 @@ export default function ProfilePage() {
           {loading ? (
             <div>loading...</div>
           ) : (
-            !error &&
-            data.myPosts.edges
-              .map((edge) => edge.node)
-              .map((post) => (
-                <div className="mb-4">
-                  <h3 className="my-0">{post.title}</h3>
-                  <small className="text-secondary">
-                    Created {post.createdSince} ago.
-                  </small>
-                  <p>
-                    {post.summary}...
-                    <Link to={`/post/${post.id}`}>Read more</Link>
-                  </p>
-                </div>
-              ))
+            !error && (
+              <CardColumns>
+                {data.myPosts.edges
+                  .map((edge) => edge.node)
+                  .map((post) => (
+                    <PostCard key={post.id} post={post} />
+                  ))}
+              </CardColumns>
+            )
           )}
         </Col>
       </Row>
