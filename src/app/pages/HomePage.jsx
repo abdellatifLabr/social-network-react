@@ -15,6 +15,7 @@ const POSTS_QUERY = gql`
           summary
           createdSince
           user {
+            id
             fullName
           }
         }
