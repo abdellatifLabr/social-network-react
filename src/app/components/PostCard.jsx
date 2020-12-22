@@ -19,7 +19,7 @@ export default function PostCard({ post }) {
       </Card.Body>
       <Card.Footer>
         <small>
-          Posted by <Link to={`/profile/${id}`}>{user.fullName}</Link>{' '}
+          Posted by <Link to={`/profile/${user.id}`}>{user.fullName}</Link>{' '}
           {createdSince} ago
         </small>
       </Card.Footer>
