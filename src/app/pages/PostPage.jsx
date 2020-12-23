@@ -2,6 +2,7 @@ import React from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { gql, useQuery } from '@apollo/client';
 import { Image } from 'react-bootstrap';
+import ReactMarkdown from 'react-markdown';
 
 import Loading from '../components/Loading';
 
@@ -148,7 +149,7 @@ export default function PostPage() {
         <hr />
         <Image src={post.imageUrl} className="w-100 mb-4" />
         <div className="post-body pb-1">
-          <p>{post.body}</p>
+          <ReactMarkdown>{post.body}</ReactMarkdown>
         </div>
       </div>
     )
