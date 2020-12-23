@@ -11,16 +11,17 @@ export default function PostCard({ post }) {
   };
 
   return (
-    <Card>
+    <Card style={{ cursor: 'pointer' }}>
       <Card.Img onClick={() => gotoPost(id)} variant="top" src={imageUrl} />
-      <Card.Body>
+      <Card.Body onClick={() => gotoPost(id)}>
         <Card.Title>{title}</Card.Title>
         <Card.Text>{summary}</Card.Text>
       </Card.Body>
       <Card.Footer>
         <small>
-          Posted by <Link to={`/profile/${user.id}`}>{user.fullName}</Link>{' '}
-          {createdSince} ago
+          Posted by <Link to={`/profile/${user.id}`}>{user.fullName}</Link>
+          <br />
+          <span className="text-secondary">{createdSince}</span>
         </small>
       </Card.Footer>
     </Card>
