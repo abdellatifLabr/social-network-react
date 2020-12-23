@@ -6,6 +6,7 @@ import { useDispatch } from 'react-redux';
 
 import { register } from '../../lib/providers/user';
 import { fetchUser } from '../../store/actions/user';
+import ErrorsList from '../components/ErrorsList';
 
 export default function RegisterPage() {
   const history = useHistory();
@@ -141,17 +142,5 @@ export default function RegisterPage() {
         </Button>
       </Form>
     </div>
-  );
-}
-
-function ErrorsList({ errors, field }) {
-  if (!errors[field]) return null;
-
-  return (
-    <ul className="text-danger">
-      {errors[field].map((error) => (
-        <li key={error.code}>{error.message}</li>
-      ))}
-    </ul>
   );
 }

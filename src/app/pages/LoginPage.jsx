@@ -5,6 +5,7 @@ import { useFormik } from 'formik';
 import { useDispatch } from 'react-redux';
 
 import { signInUser } from '../../store/actions/user';
+import ErrorsList from '../components/ErrorsList';
 
 export default function LoginPage() {
   const history = useHistory();
@@ -75,17 +76,5 @@ export default function LoginPage() {
         </Button>
       </Form>
     </div>
-  );
-}
-
-function ErrorsList({ errors, field }) {
-  if (!errors[field]) return null;
-
-  return (
-    <ul className="text-danger">
-      {errors[field].map((error) => (
-        <li key={error.code}>{error.message}</li>
-      ))}
-    </ul>
   );
 }
