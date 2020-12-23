@@ -3,6 +3,8 @@ import { Link, useParams } from 'react-router-dom';
 import { gql, useQuery } from '@apollo/client';
 import { Image } from 'react-bootstrap';
 
+import Loading from '../components/Loading';
+
 const POST_QUERY = gql`
   query Post($id: ID!) {
     post(id: $id) {
@@ -24,7 +26,7 @@ export default function PostPage() {
     variables: { id },
   });
 
-  if (loading) return <div>loading...</div>;
+  if (loading) return <Loading />;
 
   const { post } = data;
 

@@ -3,6 +3,7 @@ import { Row, Col, CardColumns } from 'react-bootstrap';
 import { gql, useQuery } from '@apollo/client';
 
 import PostCard from '../components/PostCard';
+import Loading from '../components/Loading';
 
 const POSTS_QUERY = gql`
   query Posts {
@@ -27,7 +28,7 @@ const POSTS_QUERY = gql`
 export default function HomePage() {
   const { loading, data } = useQuery(POSTS_QUERY);
 
-  if (loading) return <div>loading...</div>;
+  if (loading) return <Loading />;
 
   return (
     <Row>

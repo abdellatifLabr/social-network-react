@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 import { gql, useQuery } from '@apollo/client';
 
 import PostCard from '../components/PostCard';
+import Loading from '../components/Loading';
 
 const PROFILE_QUERY = gql`
   query Profile($id: ID!) {
@@ -39,7 +40,7 @@ export default function ProfilePage() {
     variables: { id: id || user$.id },
   });
 
-  if (loading) return <div>loading...</div>;
+  if (loading) return <Loading />;
   if (error) return <div>error!!!</div>;
 
   const { user } = data;
