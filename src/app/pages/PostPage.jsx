@@ -35,12 +35,9 @@ export default function PostPage() {
       <div className="mx-5 mt-5">
         <div className="pb-2 pb-lg-4">
           <h1 className="display-4 mb-2 font-weight-bold">{post.title}</h1>
-          <div className="d-flex ">
+          <div className="d-flex align-items-center">
             <div className="mr-2">
-              <div
-                className="rounded-circle "
-                style={{ width: '30px', height: '30px' }}
-              >
+              <div style={{ width: '50px', height: '50px' }}>
                 <img
                   src={post.user.image || '/media/avatar-img.png'}
                   height="100%"
@@ -50,10 +47,12 @@ export default function PostPage() {
               </div>
             </div>
             <div>
-              <span className="small text-muted font-italic">
-                Posted by <Link to="/">{post.user.fullName}</Link>{' '}
-                {post.createdSince} ago.
-              </span>
+              <small>
+                <div>
+                  Posted by <Link to="/">{post.user.fullName}</Link>
+                </div>
+                <div className="text-secondary">{post.createdSince} ago</div>
+              </small>
             </div>
           </div>
         </div>
