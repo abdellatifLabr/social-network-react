@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Row, Col, CardColumns } from 'react-bootstrap';
 import { gql, useQuery } from '@apollo/client';
 
@@ -26,7 +26,11 @@ const POSTS_QUERY = gql`
 `;
 
 export default function HomePage() {
-  const { loading, data } = useQuery(POSTS_QUERY);
+  const { loading, data, refetch } = useQuery(POSTS_QUERY);
+
+  useEffect(() => {
+    refetch();
+  }, []);
 
   if (loading) return <Loading />;
 
