@@ -37,7 +37,7 @@ export default function ProfilePage() {
   const user$ = useSelector((state) => state.user);
   const { id } = useParams();
   const { loading, error, data } = useQuery(PROFILE_QUERY, {
-    variables: { id: id || user$.id },
+    variables: { id: id || (user$ && user$.id) },
   });
 
   if (loading) return <Loading />;
