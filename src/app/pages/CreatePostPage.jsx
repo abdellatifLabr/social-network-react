@@ -7,8 +7,15 @@ import { gql, useMutation } from '@apollo/client';
 import ErrorsList from '../components/ErrorsList';
 
 const CREATE_POST_MUTATION = gql`
-  mutation CreatePost($title: String!, $body: String!, $image: Upload!) {
-    createPost(input: { title: $title, body: $body, image: $image }) {
+  mutation CreatePost(
+    $title: String!
+    $summary: String!
+    $body: String!
+    $image: Upload!
+  ) {
+    createPost(
+      input: { title: $title, summary: $summary, body: $body, image: $image }
+    ) {
       success
       errors
       post {
@@ -43,6 +50,7 @@ export default function CreatePostPage() {
   const formik = useFormik({
     initialValues: {
       title: '',
+      summary: '',
       body: [''],
       image: '',
     },
@@ -80,6 +88,23 @@ export default function CreatePostPage() {
             />
             <Form.Control.Feedback type="invalid">
               {errors && <ErrorsList field="title" errors={errors} />}
+            </Form.Control.Feedback>
+          </Form.Group>
+
+          {/* Summary */}
+          <Form.Group>
+            <Form.Label>Summary</Form.Label>
+            <Form.Control
+              as="textarea"
+              name="summary"
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.summary}
+              placeholder="Summary"
+              isInvalid={errors && errors.summary}
+            />
+            <Form.Control.Feedback type="invalid">
+              {errors && <ErrorsList field="summary" errors={errors} />}
             </Form.Control.Feedback>
           </Form.Group>
 
