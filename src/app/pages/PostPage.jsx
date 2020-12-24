@@ -10,6 +10,7 @@ const POST_QUERY = gql`
   query Post($id: ID!) {
     post(id: $id) {
       title
+      summary
       imageUrl
       body
       createdSince
@@ -149,6 +150,7 @@ export default function PostPage() {
         <hr />
         <Image src={post.imageUrl} className="w-100 mb-4" />
         <div className="post-body pb-1">
+          <p>{post.summary}</p>
           <ReactMarkdown>{post.body}</ReactMarkdown>
         </div>
       </div>

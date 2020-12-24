@@ -12,8 +12,8 @@ const POSTS_QUERY = gql`
         node {
           id
           title
-          imageUrl
           summary
+          imageUrl
           createdSince
           user {
             id
