@@ -15,6 +15,7 @@ export default function RegisterPage() {
   const [loading, setLoading] = useState(false);
 
   const onSubmit = async (values) => {
+    setErrors(null);
     setLoading(true);
     const data = await register(values);
     setLoading(false);

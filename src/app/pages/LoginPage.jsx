@@ -14,6 +14,7 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false);
 
   const onSubmit = (values) => {
+    setErrors(null);
     setLoading(true);
     dispatch(signInUser(values.email, values.password))
       .then(() => {
