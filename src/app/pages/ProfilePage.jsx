@@ -1,5 +1,5 @@
 import React from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { Row, Col, Image, Button, CardColumns } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import { gql, useQuery } from '@apollo/client';
@@ -62,9 +62,13 @@ export default function ProfilePage() {
           <div>
             <h3 className="font-weight-bold text-uppercase">My Posts</h3>
           </div>
-          <div>
-            <Button>+ New Post</Button>
-          </div>
+          {user.id !== user$.id && (
+            <div>
+              <Link to="/post/create">
+                <Button>+ New Post</Button>
+              </Link>
+            </div>
+          )}
         </div>
         <CardColumns>
           {user.posts.edges
