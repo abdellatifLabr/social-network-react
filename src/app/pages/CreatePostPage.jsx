@@ -62,13 +62,13 @@ export default function CreatePostPage() {
       if (!success) setErrors(data.createPost.errors);
       if (success) {
         await sections.forEach(async ({ type, content }, index) => {
-          if (type === 'text') {
+          if (type === 'TEXT') {
             await createSection({
               variables: { postId: post.pk, type, content, order: index + 1 },
             });
           }
 
-          if (['image', 'video'].includes(type)) {
+          if (['IMAGE', 'VIDEO'].includes(type)) {
             await createSection({
               variables: {
                 postId: post.pk,
@@ -101,7 +101,7 @@ export default function CreatePostPage() {
     initialValues: {
       title: '',
       summary: '',
-      body: [{ type: 'text', content: '' }],
+      body: [{ type: 'TEXT', content: '' }],
       image: '',
     },
     onSubmit,
@@ -122,7 +122,7 @@ export default function CreatePostPage() {
   };
 
   const getSectionComponent = ({ type, content }, index) => {
-    if (type === 'text') {
+    if (type === 'TEXT') {
       return (
         <Form.Control
           as="textarea"
@@ -138,7 +138,7 @@ export default function CreatePostPage() {
       );
     }
 
-    if (['image', 'video'].includes(type)) {
+    if (['IMAGE', 'VIDEO'].includes(type)) {
       return (
         <Form.File
           type="file"
@@ -229,13 +229,13 @@ export default function CreatePostPage() {
                 + Add Section
               </Dropdown.Toggle>
               <Dropdown.Menu>
-                <Dropdown.Item onClick={() => addBodySection('text')}>
+                <Dropdown.Item onClick={() => addBodySection('TEXT')}>
                   Text
                 </Dropdown.Item>
-                <Dropdown.Item onClick={() => addBodySection('image')}>
+                <Dropdown.Item onClick={() => addBodySection('IMAGE')}>
                   Image
                 </Dropdown.Item>
-                <Dropdown.Item onClick={() => addBodySection('video')}>
+                <Dropdown.Item onClick={() => addBodySection('VIDEO')}>
                   Video
                 </Dropdown.Item>
               </Dropdown.Menu>
