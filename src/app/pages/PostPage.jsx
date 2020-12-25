@@ -12,11 +12,21 @@ const POST_QUERY = gql`
       title
       summary
       imageUrl
-      body
       createdSince
       user {
         fullName
         image
+      }
+      sections {
+        count
+        edges {
+          node {
+            type
+            content
+            fileUrl
+            order
+          }
+        }
       }
     }
   }
@@ -31,6 +41,24 @@ export default function PostPage() {
   if (loading) return <Loading />;
 
   const { post } = data;
+
+  const getSectionComponent = ({ type, content, fileUrl }) => {
+    if (type === 'TEXT') {
+      return <p>{content}</p>;
+    }
+
+    if (type === 'IMAGE') {
+      return <Image src={fileUrl} width="100%" />;
+    }
+
+    if (type === 'VIDEO') {
+      return (
+        <video src={fileUrl}>
+          <track kind="captions" />
+        </video>
+      );
+    }
+  };
 
   return (
     post && (
@@ -151,7 +179,9 @@ export default function PostPage() {
         <Image src={post.imageUrl} className="w-100 mb-4" />
         <div className="post-body pb-1">
           <p>{post.summary}</p>
-          <ReactMarkdown>{post.body}</ReactMarkdown>
+          {post.sections.edges
+            .map((edge) => edge.node)
+            .map(getSectionComponent)}
         </div>
       </div>
     )
