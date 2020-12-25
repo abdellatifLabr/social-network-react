@@ -1,24 +1,44 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useFormik } from 'formik';
-import { Form, Button, Row, Col } from 'react-bootstrap';
+import { Form, Button, Row, Col, Dropdown } from 'react-bootstrap';
 import { gql, useMutation } from '@apollo/client';
 
 import ErrorsList from '../components/ErrorsList';
 
 const CREATE_POST_MUTATION = gql`
-  mutation CreatePost(
-    $title: String!
-    $summary: String!
-    $body: String!
-    $image: Upload!
-  ) {
-    createPost(
-      input: { title: $title, summary: $summary, body: $body, image: $image }
-    ) {
+  mutation CreatePost($title: String!, $summary: String!, $image: Upload!) {
+    createPost(input: { title: $title, summary: $summary, image: $image }) {
       success
       errors
       post {
+        pk
+        id
+      }
+    }
+  }
+`;
+
+const CREATE_SECTION_MUTATION = gql`
+  mutation CreateSection(
+    $postId: ID!
+    $order: Int!
+    $type: String!
+    $content: String
+    $file: Upload
+  ) {
+    createSection(
+      input: {
+        postId: $postId
+        order: $order
+        type: $type
+        content: $content
+        file: $file
+      }
+    ) {
+      success
+      errors
+      section {
         id
       }
     }
@@ -29,12 +49,39 @@ export default function CreatePostPage() {
   const history = useHistory();
   const [errors, setErrors] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [createPost] = useMutation(CREATE_POST_MUTATION, {
+  const [sections, setSections] = useState(null);
+  const [createSection] = useMutation(CREATE_SECTION_MUTATION, {
     onCompleted: (data) => {
-      setLoading(false);
+      const { success } = data.createSection;
+      if (!success) setErrors(data.createSection.errors);
+    },
+  });
+  const [createPost] = useMutation(CREATE_POST_MUTATION, {
+    onCompleted: async (data) => {
       const { success, post } = data.createPost;
       if (!success) setErrors(data.createPost.errors);
-      if (success) history.push(`/post/${post.id}`);
+      if (success) {
+        await sections.forEach(async ({ type, content }, index) => {
+          if (type === 'text') {
+            await createSection({
+              variables: { postId: post.pk, type, content, order: index + 1 },
+            });
+          }
+
+          if (['image', 'video'].includes(type)) {
+            await createSection({
+              variables: {
+                postId: post.pk,
+                type,
+                file: content,
+                order: index + 1,
+              },
+            });
+          }
+        });
+        setLoading(false);
+        history.push(`/post/${post.id}`);
+      }
     },
     onError: () => {
       setLoading(false);
@@ -44,21 +91,72 @@ export default function CreatePostPage() {
   const onSubmit = async (values) => {
     setErrors(null);
     setLoading(true);
-    createPost({ variables: { ...values, body: values.body.join('\n\n') } });
+    setSections(values.body);
+    await createPost({
+      variables: { ...values },
+    });
   };
 
   const formik = useFormik({
     initialValues: {
       title: '',
       summary: '',
-      body: [''],
+      body: [{ type: 'text', content: '' }],
       image: '',
     },
     onSubmit,
   });
 
-  const addBodySection = () => {
-    formik.setFieldValue('body', [...formik.values.body, 'New section']);
+  const addBodySection = (type) => {
+    formik.setFieldValue('body', [
+      ...formik.values.body,
+      { type, content: '' },
+    ]);
+  };
+
+  const removeBodySection = (index) => {
+    formik.setFieldValue('body', [
+      ...formik.values.body.slice(0, index),
+      ...formik.values.body.slice(index + 1),
+    ]);
+  };
+
+  const getSectionComponent = ({ type, content }, index) => {
+    if (type === 'text') {
+      return (
+        <Form.Control
+          as="textarea"
+          rows="10"
+          name={`body[${index}].content`}
+          value={content}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          placeholder="Body"
+          isInvalid={errors && errors.body}
+          className="mb-2"
+        />
+      );
+    }
+
+    if (['image', 'video'].includes(type)) {
+      return (
+        <Form.File
+          type="file"
+          label="Post File"
+          custom
+          name={`body[${index}].content`}
+          onChange={(e) =>
+            formik.setFieldValue(
+              `body[${index}].content`,
+              e.currentTarget.files && e.currentTarget.files[0]
+            )
+          }
+          onBlur={formik.handleBlur}
+          isInvalid={errors && errors.image}
+          className="mb-2"
+        />
+      );
+    }
   };
 
   return (
@@ -111,22 +209,37 @@ export default function CreatePostPage() {
           {/* Body */}
           <Form.Group>
             <Form.Label>Body</Form.Label>
-            {formik.values.body.map((value, index) => (
-              <Form.Control
-                as="textarea"
-                rows="10"
-                name={`body[${index}]`}
-                value={formik.values.body[index]}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                placeholder="Body"
-                isInvalid={errors && errors.body}
-                className="mb-2"
-              />
+            {formik.values.body.map((section, index) => (
+              <div className="d-flex" key={index.toString()}>
+                <div className="flex-grow-1">
+                  {getSectionComponent(section, index)}
+                </div>
+                <div className="ml-2">
+                  <Button
+                    variant="danger"
+                    onClick={() => removeBodySection(index)}
+                  >
+                    <span aria-hidden="true">&times;</span>
+                  </Button>
+                </div>
+              </div>
             ))}
-            <Button variant="dark" onClick={addBodySection}>
-              + Add Section
-            </Button>
+            <Dropdown>
+              <Dropdown.Toggle variant="dark" id="dropdown-basic">
+                + Add Section
+              </Dropdown.Toggle>
+              <Dropdown.Menu>
+                <Dropdown.Item onClick={() => addBodySection('text')}>
+                  Text
+                </Dropdown.Item>
+                <Dropdown.Item onClick={() => addBodySection('image')}>
+                  Image
+                </Dropdown.Item>
+                <Dropdown.Item onClick={() => addBodySection('video')}>
+                  Video
+                </Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>
             <Form.Control.Feedback type="invalid">
               {errors && <ErrorsList field="body" errors={errors} />}
             </Form.Control.Feedback>
