@@ -1,18 +1,21 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { gql, useQuery } from '@apollo/client';
-import { Image } from 'react-bootstrap';
+import { Image, Row, Col } from 'react-bootstrap';
 
 import Loading from '../components/Loading';
+import PostCard from '../components/PostCard';
 
 const POST_QUERY = gql`
   query Post($id: ID!) {
     post(id: $id) {
+      id
       title
       summary
       imageUrl
       createdSince
       user {
+        id
         fullName
         image
       }
@@ -182,7 +185,55 @@ export default function PostPage() {
             .map((edge) => edge.node)
             .map(getSectionComponent)}
         </div>
+        <div>
+          <h4 className="font-weight-bold text-uppercase my-4">
+            Suggested Posts
+          </h4>
+          <SuggestedPosts postId={post.id} userId={post.user.id} />
+        </div>
       </div>
     )
+  );
+}
+
+const SUGGESTED_POSTS_QUERY = gql`
+  query SuggestedPosts($userId: ID!, $postId: String!) {
+    posts(user_Id: $userId, last: 4, before: $postId) {
+      edges {
+        node {
+          id
+          title
+          summary
+          imageUrl
+          createdSince
+          user {
+            fullName
+            image
+          }
+        }
+      }
+    }
+  }
+`;
+
+function SuggestedPosts({ userId, postId }) {
+  const { loading, data } = useQuery(SUGGESTED_POSTS_QUERY, {
+    variables: { userId, postId },
+  });
+
+  if (loading) return <Loading />;
+
+  const { posts } = data;
+
+  return (
+    <Row>
+      {posts.edges
+        .map((edge) => edge.node)
+        .map((post, index) => (
+          <Col key={index.toString()} md={4}>
+            <PostCard post={post} />
+          </Col>
+        ))}
+    </Row>
   );
 }
