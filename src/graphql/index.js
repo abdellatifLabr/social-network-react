@@ -24,7 +24,7 @@ const authLink = setContext(async (req, { headers }) => {
       currToken = token;
     }
 
-    if (errors) console.log(errors);
+    if (errors) return;
   }
 
   return {
