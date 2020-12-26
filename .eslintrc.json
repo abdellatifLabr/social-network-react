@@ -28,6 +28,8 @@
     "no-underscore-dangle": "off",
     "consistent-return": "off",
     "no-unused-vars": "warn",
+    "no-restricted-globals": "off",
+    "no-alert": "off",
     "import/no-dynamic-require": "off",
     "import/no-cycle": "off",
     "jsx-a11y/anchor-is-valid": "off",
