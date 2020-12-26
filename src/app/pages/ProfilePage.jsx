@@ -1,5 +1,5 @@
 import React from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, Redirect } from 'react-router-dom';
 import { Row, Col, Image, Button, CardColumns } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import { gql, useQuery } from '@apollo/client';
@@ -44,6 +44,8 @@ export default function ProfilePage() {
   if (error) return <div>error!!!</div>;
 
   const { user } = data;
+
+  if (id === user$.id) return <Redirect to="/profile" />;
 
   return (
     <Row>
