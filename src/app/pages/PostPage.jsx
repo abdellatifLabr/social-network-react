@@ -141,7 +141,7 @@ export default function PostPage() {
                     </div>
                   </div>
                   <div>
-                    {post.user.id === user$.id && (
+                    {user$ && user$.id === post.user.id && (
                       <Button
                         variant="outline-danger"
                         size="sm"
