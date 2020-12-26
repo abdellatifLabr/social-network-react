@@ -1,7 +1,8 @@
 import React from 'react';
-import { Link, useParams } from 'react-router-dom';
-import { gql, useQuery } from '@apollo/client';
-import { Image, Row, Col } from 'react-bootstrap';
+import { Link, useParams, useHistory } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { gql, useQuery, useMutation } from '@apollo/client';
+import { Image, Row, Col, Button } from 'react-bootstrap';
 
 import Loading from '../components/Loading';
 import PostCard from '../components/PostCard';
@@ -11,6 +12,7 @@ import SinglePostComments from '../components/HomePage/HomePageBody/PageContent/
 const POST_QUERY = gql`
   query Post($id: ID!) {
     post(id: $id) {
+      pk
       id
       title
       summary
@@ -36,10 +38,26 @@ const POST_QUERY = gql`
   }
 `;
 
+const REMOVE_POST_MUTATION = gql`
+  mutation DeletePost($id: ID!) {
+    deletePost(input: { id: $id }) {
+      success
+      errors
+    }
+  }
+`;
+
 export default function PostPage() {
+  const user$ = useSelector((state) => state.user);
   const { id } = useParams();
+  const history = useHistory();
   const { loading, data } = useQuery(POST_QUERY, {
     variables: { id },
+  });
+  const [removePost] = useMutation(REMOVE_POST_MUTATION, {
+    onCompleted: ({ deletePost }) => {
+      if (deletePost.success) history.push('/');
+    },
   });
 
   if (loading) return <Loading />;
@@ -64,6 +82,15 @@ export default function PostPage() {
     }
   };
 
+  const removePostClick = () => {
+    const yes = confirm('Are you sure you want to remove this post?');
+    if (!yes) return;
+
+    removePost({
+      variables: { id: post.pk },
+    });
+  };
+
   return (
     post && (
       <Row>
@@ -82,31 +109,47 @@ export default function PostPage() {
           <Row className="mx-4">
             <Col md={9}>
               <div className="pr-2">
-                <div className="pb-2 pb-lg-4">
-                  <h1 className="display-4 mb-2 font-weight-bold">
-                    {post.title}
-                  </h1>
-                  <div className="d-flex align-items-center">
-                    <div className="mr-2">
-                      <div style={{ width: '50px', height: '50px' }}>
-                        <img
-                          src={post.user.image || '/media/avatar-img.png'}
-                          height="100%"
-                          width="100%"
-                          alt="avatar"
-                        />
+                <div className="d-flex align-items-center">
+                  <div className="flex-grow-1">
+                    <h1 className="display-4 mb-2 font-weight-bold">
+                      {post.title}
+                    </h1>
+                    <div className="d-flex align-items-center">
+                      <div className="mr-2">
+                        <div style={{ width: '50px', height: '50px' }}>
+                          <img
+                            src={post.user.image || '/media/avatar-img.png'}
+                            height="100%"
+                            width="100%"
+                            alt="avatar"
+                          />
+                        </div>
+                      </div>
+                      <div>
+                        <small>
+                          <div>
+                            Posted by{' '}
+                            <Link to={`/profile/${post.user.id}`}>
+                              {post.user.fullName}
+                            </Link>
+                          </div>
+                          <div className="text-secondary">
+                            {post.createdSince} ago
+                          </div>
+                        </small>
                       </div>
                     </div>
-                    <div>
-                      <small>
-                        <div>
-                          Posted by <Link to="/">{post.user.fullName}</Link>
-                        </div>
-                        <div className="text-secondary">
-                          {post.createdSince} ago
-                        </div>
-                      </small>
-                    </div>
+                  </div>
+                  <div>
+                    {post.user.id === user$.id && (
+                      <Button
+                        variant="outline-danger"
+                        size="sm"
+                        onClick={removePostClick}
+                      >
+                        Remove
+                      </Button>
+                    )}
                   </div>
                 </div>
                 <hr />
