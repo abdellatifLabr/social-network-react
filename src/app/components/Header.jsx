@@ -42,15 +42,6 @@ export default function Header() {
           />
         )}
       </div>
-      {/* <div className="pb-2 pb-4">
-        <img
-          style={{ maxHeight: '280px' }}
-          src="/media/banner.png"
-          width="100%"
-          height="100%"
-          alt="bannerImage"
-        />
-      </div> */}
     </div>
   );
 }

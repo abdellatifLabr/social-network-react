@@ -9,7 +9,11 @@ const PostComments = () => {
   return (
     <div className="row mt-4">
       <div className="col-2 col-lg-1">
-        <img src="/media/card-img.png" className="img-avatar" alt="UserImg" />
+        <img
+          src="/media/card-img.png"
+          className="img-avatar w-100"
+          alt="UserImg"
+        />
       </div>
       <div className="col-10 col-lg-11">
         <div className="post-comments" style={{ fontFamily: 'poppins' }}>

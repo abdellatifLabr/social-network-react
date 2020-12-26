@@ -57,9 +57,9 @@
       border: none;
 
       &:focus {
-        @at-root .custom-search-box {
-          border: 1px solid $secondary;
-        }
+        // @at-root .custom-search-box {
+        //   border: 1px solid $secondary;
+        // }
         border-color: transparent;
         box-shadow: none;
       }

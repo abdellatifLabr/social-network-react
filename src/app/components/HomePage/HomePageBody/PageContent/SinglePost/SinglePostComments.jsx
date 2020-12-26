@@ -2,9 +2,9 @@ import React from 'react';
 
 import PostComments from './PostComments';
 
-export default function Singlepostcomments() {
+export default function SinglePostComments() {
   return (
-    <div>
+    <div className="mt-4">
       <h5 className="h5 font-weight-bold">
         <span>2</span> Comments
       </h5>
@@ -13,7 +13,7 @@ export default function Singlepostcomments() {
           <div className="col-2 col-lg-1">
             <img
               src="/media/card-img.png"
-              className="img-avatar"
+              className="img-avatar w-100"
               alt="UserImg"
             />
           </div>
