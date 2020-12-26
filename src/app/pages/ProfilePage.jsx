@@ -62,7 +62,7 @@ export default function ProfilePage() {
           <div>
             <h3 className="font-weight-bold text-uppercase">My Posts</h3>
           </div>
-          {user.id !== user$.id && (
+          {!id && (
             <div>
               <Link to="/post/create">
                 <Button>+ New Post</Button>
