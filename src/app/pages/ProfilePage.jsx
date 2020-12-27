@@ -54,8 +54,8 @@ export default function ProfilePage() {
         <Image src={user.cover || '/media/banner.png'} className="w-100" />
         <Image
           src={user.image || '/media/avatar-img.png'}
-          width="200"
-          style={{ marginTop: '-120px' }}
+          className="w-25"
+          style={{ marginTop: '-15%' }}
         />
         <h1 className="mt-3 mb-1">{user.fullName}</h1>
         <small>@{user.username}</small>

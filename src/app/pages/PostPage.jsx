@@ -93,7 +93,7 @@ export default function PostPage() {
     post && (
       <Row>
         <Col md={12}>
-          <div className="pb-2 pb-4">
+          <div className="mb-5">
             <img
               style={{ maxHeight: '280px' }}
               src="/media/banner.png"
@@ -104,7 +104,7 @@ export default function PostPage() {
           </div>
         </Col>
         <Col md={12}>
-          <Row className="mx-4">
+          <Row className="">
             <Col md={9}>
               <div className="pr-2">
                 <div className="d-flex align-items-center">

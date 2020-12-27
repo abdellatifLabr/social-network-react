@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import { Button } from 'react-bootstrap';
 
 import { openMenu } from '../../store/actions/menu';
 import '../../utils/styles/scss/Header.scss';
@@ -11,7 +12,7 @@ export default function Header() {
 
   return (
     <div className="header mb-5">
-      <div className="d-flex justify-content-between py-lg-4 py-2">
+      <div className="d-flex justify-content-between align-items-center py-lg-4 py-2">
         <Link to="/">
           <img src="/media/logo.png" width={50} height="auto" alt="app logo" />
         </Link>
@@ -20,12 +21,12 @@ export default function Header() {
           <ul>
             <li>
               <Link to="/login">
-                <button type="button">Login</button>
+                <Button variant="outline-dark">Login</Button>
               </Link>
             </li>
             <li>
               <Link to="/register">
-                <button type="button">Register</button>
+                <Button variant="outline-dark">Register</Button>
               </Link>
             </li>
           </ul>

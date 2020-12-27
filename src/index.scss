@@ -46,6 +46,12 @@ p {
 button.btn {
   border-radius: 0;
   text-transform: uppercase;
+  border-width: 3px;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+button.outline {
 }
 
 .form-control {

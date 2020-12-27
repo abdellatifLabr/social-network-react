@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { Form, Button } from 'react-bootstrap';
+import { Row, Col, Form, Button } from 'react-bootstrap';
 import { useFormik } from 'formik';
 import { useDispatch } from 'react-redux';
 
@@ -33,49 +33,51 @@ export default function LoginPage() {
   });
 
   return (
-    <div className="w-50 mx-auto mt-lg-5">
-      <Form onSubmit={formik.handleSubmit}>
-        {/* Email */}
-        <Form.Group>
-          <Form.Label>Email address</Form.Label>
-          <Form.Control
-            type="email"
-            name="email"
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            value={formik.values.email}
-            placeholder="Enter email"
-            isInvalid={errors && errors.email}
-          />
-          <Form.Control.Feedback type="invalid">
-            {errors && <ErrorsList field="email" errors={errors} />}
-          </Form.Control.Feedback>
-        </Form.Group>
+    <Row>
+      <Col md={{ span: 6, offset: 3 }}>
+        <Form onSubmit={formik.handleSubmit}>
+          {/* Email */}
+          <Form.Group>
+            <Form.Label>Email address</Form.Label>
+            <Form.Control
+              type="email"
+              name="email"
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.email}
+              placeholder="Enter email"
+              isInvalid={errors && errors.email}
+            />
+            <Form.Control.Feedback type="invalid">
+              {errors && <ErrorsList field="email" errors={errors} />}
+            </Form.Control.Feedback>
+          </Form.Group>
 
-        {/* Password */}
-        <Form.Group>
-          <Form.Label>Password</Form.Label>
-          <Form.Control
-            type="password"
-            name="password"
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            value={formik.values.password}
-            placeholder="Password"
-            isInvalid={errors && errors.password}
-          />
-          <Form.Control.Feedback type="invalid">
-            {errors && <ErrorsList field="password" errors={errors} />}
-          </Form.Control.Feedback>
-        </Form.Group>
+          {/* Password */}
+          <Form.Group>
+            <Form.Label>Password</Form.Label>
+            <Form.Control
+              type="password"
+              name="password"
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.password}
+              placeholder="Password"
+              isInvalid={errors && errors.password}
+            />
+            <Form.Control.Feedback type="invalid">
+              {errors && <ErrorsList field="password" errors={errors} />}
+            </Form.Control.Feedback>
+          </Form.Group>
 
-        {/* Non field errors */}
-        {errors && <ErrorsList field="nonFieldErrors" errors={errors} />}
+          {/* Non field errors */}
+          {errors && <ErrorsList field="nonFieldErrors" errors={errors} />}
 
-        <Button variant="primary" type="submit" disabled={loading}>
-          Log In
-        </Button>
-      </Form>
-    </div>
+          <Button variant="dark" type="submit" disabled={loading}>
+            Log In
+          </Button>
+        </Form>
+      </Col>
+    </Row>
   );
 }
