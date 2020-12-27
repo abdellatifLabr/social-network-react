@@ -31,3 +31,42 @@ p {
 }
 
 @import "utils/styles/scss/homePage";
+
+.card {
+  border-radius: 0;
+  * {
+    border-radius: 0;
+  }
+
+  .card-header, .card-footer {
+    background-color: transparent;
+  }
+}
+
+button.btn {
+  border-radius: 0;
+  text-transform: uppercase;
+}
+
+.form-control {
+  border-radius: 0;
+}
+
+.custom .custom-file {
+  border-radius: 0;
+  .custom-file-input {
+    border-radius: 0;
+  }
+  .custom-file-label {
+    border-radius: 0;
+  }
+}
+
+.dropdown-menu {
+  border-radius: 0;
+}
+
+a:link{color: #000; text-decoration: none;}
+a:visited{color: #000; text-decoration: none;}
+a:active{color: #000; text-decoration: none;}
+a:hover{color: #000; text-decoration: underline;}
