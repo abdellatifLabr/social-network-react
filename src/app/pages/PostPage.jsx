@@ -5,7 +5,6 @@ import { gql, useQuery, useMutation } from '@apollo/client';
 import { Image, Row, Col, Button } from 'react-bootstrap';
 
 import Loading from '../components/Loading';
-import PostCard from '../components/PostCard';
 import RightSideBar from '../components/HomePage/HomePageBody/PageFilters/RightSideBar';
 import SinglePostComments from '../components/HomePage/HomePageBody/PageContent/SinglePost/SinglePostComments';
 
@@ -198,51 +197,6 @@ export default function PostPage() {
         </Col>
       </Row>
     )
-  );
-}
-
-const SUGGESTED_POSTS_QUERY = gql`
-  query SuggestedPosts($userId: ID!, $postId: String!) {
-    posts(user_Id: $userId, last: 4, before: $postId) {
-      edges {
-        node {
-          id
-          title
-          summary
-          imageUrl
-          createdSince
-          user {
-            fullName
-            image
-          }
-        }
-      }
-    }
-  }
-`;
-
-function SuggestedPosts({ userId, postId }) {
-  const { loading, data } = useQuery(SUGGESTED_POSTS_QUERY, {
-    variables: { userId, postId },
-  });
-
-  if (loading) return <Loading />;
-
-  const { posts } = data;
-
-  return (
-    <Row>
-      <Col md={12}>
-        <h4 className="font-weight-bold mb-4 mt-5">Popular Posts</h4>
-      </Col>
-      {posts.edges
-        .map((edge) => edge.node)
-        .map((post, index) => (
-          <Col key={index.toString()} md={4}>
-            <PostCard post={post} />
-          </Col>
-        ))}
-    </Row>
   );
 }
 
