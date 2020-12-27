@@ -76,3 +76,31 @@ a:link{color: #000; text-decoration: none;}
 a:visited{color: #000; text-decoration: none;}
 a:active{color: #000; text-decoration: none;}
 a:hover{color: #000; text-decoration: underline;}
+
+
+.side-menu {
+  width: 25%;
+  z-index: 1;
+  top: 0;
+  bottom: 0;
+  right: -25%;
+  transition: right linear 0.2s 0s;
+
+  &.show {
+    right: 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .side-menu {
+    width: 50%;
+    right: -50%;
+  }
+}
+
+@media (max-width: 576px) {
+  .side-menu {
+    width: 100%;
+    right: -100%;
+  }
+}

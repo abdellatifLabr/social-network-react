@@ -21,16 +21,9 @@ export default function Menu() {
 
   return (
     <div
-      className="position-fixed shadow flex flex-direction-columns"
-      style={{
-        width: '25%',
-        backgroundColor: '#fff',
-        zIndex: '1',
-        top: '0',
-        bottom: '0',
-        right: showMenu ? '0' : '-25%',
-        transition: 'right linear 0.2s 0s',
-      }}
+      className={`position-fixed shadow flex flex-direction-columns bg-white side-menu ${
+        showMenu ? 'show' : ''
+      }`}
     >
       <div className="p-3">
         <button
