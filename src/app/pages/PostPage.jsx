@@ -20,7 +20,6 @@ const POST_QUERY = gql`
       user {
         id
         fullName
-        image
       }
       sections {
         count
