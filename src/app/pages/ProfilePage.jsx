@@ -15,6 +15,7 @@ const PROFILE_QUERY = gql`
       image
       cover
       posts {
+        count
         edges {
           node {
             id
@@ -45,7 +46,7 @@ export default function ProfilePage() {
 
   const { user } = data;
 
-  if (id === user$.id) return <Redirect to="/profile" />;
+  if (user$ && id === user$.id) return <Redirect to="/profile" />;
 
   return (
     <Row>
@@ -72,6 +73,11 @@ export default function ProfilePage() {
             </div>
           )}
         </div>
+        {user.posts.count === 0 && (
+          <h4 className="text-secondary text-center h-25">
+            There's no posts yet, <Link to="/post/create">Create one</Link>.
+          </h4>
+        )}
         <CardColumns>
           {user.posts.edges
             .map((edge) => edge.node)

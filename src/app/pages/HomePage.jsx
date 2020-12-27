@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { Row, Col, CardColumns } from 'react-bootstrap';
 import { gql, useQuery } from '@apollo/client';
 
@@ -8,6 +9,7 @@ import Loading from '../components/Loading';
 const POSTS_QUERY = gql`
   query Posts {
     posts {
+      count
       edges {
         node {
           id
@@ -46,6 +48,11 @@ export default function HomePage() {
         </div>
       </Col>
       <Col md={12}>
+        {data.posts.count === 0 && (
+          <h4 className="text-secondary text-center h-25">
+            There's no posts yet, <Link to="/post/create">Create one</Link>.
+          </h4>
+        )}
         <CardColumns>
           {data.posts.edges
             .map((edge) => edge.node)
