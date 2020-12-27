@@ -4,7 +4,7 @@ import PostsList from './posts/PostsList';
 import TweetsList from './Tweets/TweetsList';
 import IgPhotosList from './instagramPhotos/IgPhotosList';
 
-export default function Rightsidebar() {
+export default function Rightsidebar({ post }) {
   return (
     <div>
       <div className="form-group custom-search-box d-flex">
@@ -21,7 +21,7 @@ export default function Rightsidebar() {
         </button>
       </div>
       <CategoriesList />
-      <PostsList />
+      <PostsList post={post} />
       <TweetsList />
       <IgPhotosList />
     </div>

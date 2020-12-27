@@ -1,15 +1,30 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 
-const PostItem = ({ itemName, itemDate, itemImage }) => (
-  <div className="d-flex align-items-center mb-3 ">
-    <div style={{ width: '70px', height: '70px' }} className="mr-4">
-      <img src={itemImage} alt={itemName} width="100%" height="100%" />
-    </div>
-    <div>
-      <h6 className="h6">{itemName}</h6>
-      <h6 className="small text-muted">{itemDate}</h6>
-    </div>
-  </div>
-);
+export default function Postitem({ post }) {
+  const history = useHistory();
+  const { id, title, imageUrl, createdSince } = post;
 
-export default PostItem;
+  return (
+    <div
+      className="d-flex align-items-center mb-3"
+      style={{ cursor: 'pointer' }}
+      onClick={() => history.push(`/post/${id}`)}
+    >
+      <div
+        style={{
+          width: '70px',
+          height: '70px',
+          backgroundImage: `url(${imageUrl})`,
+          backgroundPosition: 'center center',
+          backgroundSize: 'cover',
+        }}
+        className="mr-4"
+      />
+      <div>
+        <h6 className="h6">{title}</h6>
+        <h6 className="small text-muted">{createdSince}</h6>
+      </div>
+    </div>
+  );
+}

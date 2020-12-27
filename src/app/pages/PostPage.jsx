@@ -168,10 +168,7 @@ export default function PostPage() {
               </div>
             </Col>
             <Col md={3}>
-              <RightSideBar />
-            </Col>
-            <Col md={12}>
-              <SuggestedPosts postId={post.id} userId={post.user.id} />
+              <RightSideBar post={post} />
             </Col>
           </Row>
         </Col>
