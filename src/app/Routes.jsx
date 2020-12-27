@@ -13,13 +13,13 @@ const HomePage = lazy(() => import('./pages/HomePage'));
 const Routes = () => (
   <Suspense fallback={() => <Loading />}>
     <Switch>
-      <Route path="/" component={HomePage} exact />
-      <Route path="/login" component={LoginPage} exact />
-      <Route path="/register" component={RegisterPage} exact />
-      <Route path="/profile" component={ProfilePage} exact />
-      <Route path="/profile/:id" component={ProfilePage} exact />
-      <Route path="/post/create" component={CreatePostPage} exact />
-      <Route path="/post/:id" component={PostPage} exact />
+      <Route path="/" render={() => <HomePage />} exact />
+      <Route path="/login" render={() => <LoginPage />} exact />
+      <Route path="/register" render={() => <RegisterPage />} exact />
+      <Route path="/profile" render={() => <ProfilePage />} exact />
+      <Route path="/profile/:id" render={() => <ProfilePage />} exact />
+      <Route path="/post/create" render={() => <CreatePostPage />} exact />
+      <Route path="/post/:id" render={() => <PostPage />} exact />
       <Redirect to="/" />
     </Switch>
   </Suspense>
