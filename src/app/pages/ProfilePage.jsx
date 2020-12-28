@@ -3,6 +3,8 @@ import { useParams, Link, Redirect } from 'react-router-dom';
 import { Row, Col, Image, Button, CardColumns } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import { gql, useQuery } from '@apollo/client';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCamera } from '@fortawesome/free-solid-svg-icons';
 
 import PostCard from '../components/PostCard';
 import Loading from '../components/Loading';
@@ -51,14 +53,39 @@ export default function ProfilePage() {
   return (
     <Row>
       <Col md={12} className="text-center mb-5">
-        <Image src={user.cover || '/media/banner.png'} className="w-100" />
-        <Image
-          src={user.image || '/media/avatar-img.png'}
-          className="w-25"
+        <div className="position-relative">
+          <Image src={user.cover || '/media/banner.png'} className="w-100" />
+          <div
+            className="position-absolute"
+            style={{ right: '0', bottom: '0' }}
+          >
+            <Button variant="link" size="lg">
+              <FontAwesomeIcon icon={faCamera} />
+            </Button>
+          </div>
+        </div>
+        <div
+          className="position-relative w-25 mx-auto"
           style={{ marginTop: '-15%' }}
-        />
+        >
+          <Image
+            src={user.image || '/media/avatar-img.png'}
+            className="w-100"
+          />
+          <div
+            className="position-absolute"
+            style={{ right: '0', bottom: '0' }}
+          >
+            <Button variant="link" size="lg" className="p-0">
+              <FontAwesomeIcon icon={faCamera} />
+            </Button>
+          </div>
+        </div>
         <h1 className="mt-3 mb-1">{user.fullName}</h1>
         <small>@{user.username}</small>
+        <Button size="sm" className="d-block mx-auto mt-3">
+          Update Profile
+        </Button>
       </Col>
       <Col md={12}>
         <div className="d-flex justify-content-between mb-4">
