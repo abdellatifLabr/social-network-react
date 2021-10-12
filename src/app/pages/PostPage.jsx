@@ -1,12 +1,12 @@
-import React from 'react';
-import { Link, useParams, useHistory } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import { gql, useQuery, useMutation } from '@apollo/client';
-import { Image, Row, Col, Button } from 'react-bootstrap';
+import React from "react";
+import { Link, useParams, useHistory } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { gql, useQuery, useMutation } from "@apollo/client";
+import { Image, Row, Col, Button } from "react-bootstrap";
 
-import Loading from '../components/Loading';
-import RightSideBar from '../components/HomePage/HomePageBody/PageFilters/RightSideBar';
-import SinglePostComments from '../components/HomePage/HomePageBody/PageContent/SinglePost/SinglePostComments';
+import Loading from "../components/Loading";
+import RightSideBar from "../components/HomePage/HomePageBody/PageFilters/RightSideBar";
+import SinglePostComments from "../components/HomePage/HomePageBody/PageContent/SinglePost/SinglePostComments";
 
 const POST_QUERY = gql`
   query Post($id: ID!) {
@@ -54,7 +54,7 @@ export default function PostPage() {
   });
   const [removePost] = useMutation(REMOVE_POST_MUTATION, {
     onCompleted: ({ deletePost }) => {
-      if (deletePost.success) history.push('/');
+      if (deletePost.success) history.push("/");
     },
   });
 
@@ -63,15 +63,15 @@ export default function PostPage() {
   const { post } = data;
 
   const getSectionComponent = ({ type, content, fileUrl }) => {
-    if (type === 'TEXT') {
+    if (type === "TEXT") {
       return <p>{content}</p>;
     }
 
-    if (type === 'IMAGE') {
+    if (type === "IMAGE") {
       return <Image src={fileUrl} width="100%" />;
     }
 
-    if (type === 'VIDEO') {
+    if (type === "VIDEO") {
       return (
         <video src={fileUrl}>
           <track kind="captions" />
@@ -81,8 +81,8 @@ export default function PostPage() {
   };
 
   const removePostClick = () => {
-    const yes = confirm('Are you sure you want to remove this post?');
-    if (!yes) return;
+    // const yes = confirm('Are you sure you want to remove this post?');
+    // if (!yes) return;
 
     removePost({
       variables: { id: post.pk },
@@ -95,7 +95,7 @@ export default function PostPage() {
         <Col md={12}>
           <div className="mb-5">
             <img
-              style={{ maxHeight: '280px' }}
+              style={{ maxHeight: "280px" }}
               src="/media/banner.png"
               width="100%"
               height="100%"
@@ -114,9 +114,9 @@ export default function PostPage() {
                     </h1>
                     <div className="d-flex align-items-center">
                       <div className="mr-2">
-                        <div style={{ width: '50px', height: '50px' }}>
+                        <div style={{ width: "50px", height: "50px" }}>
                           <img
-                            src={post.user.image || '/media/avatar-img.png'}
+                            src={post.user.image || "/media/avatar-img.png"}
                             height="100%"
                             width="100%"
                             alt="avatar"
@@ -126,7 +126,7 @@ export default function PostPage() {
                       <div>
                         <small>
                           <div>
-                            Posted by{' '}
+                            Posted by{" "}
                             <Link to={`/profile/${post.user.id}`}>
                               {post.user.fullName}
                             </Link>
@@ -173,7 +173,7 @@ export default function PostPage() {
         <Col md={12} className="mt-5">
           <div
             className="container-fluid py-5"
-            style={{ backgroundColor: '#e8edef' }}
+            style={{ backgroundColor: "#e8edef" }}
           >
             <div className="row">
               <div className="col-12">
@@ -208,16 +208,16 @@ function SocialShareIcons() {
             <div className="row">
               <div
                 className="btn btn-google w-100 text-white d-flex align-items-center"
-                style={{ justifyContent: 'space-evenly' }}
+                style={{ justifyContent: "space-evenly" }}
               >
                 <div>
                   <i className="fa fa-google-plus" aria-hidden="true" />
                 </div>
                 <span
                   style={{
-                    width: '1px',
-                    backgroundColor: 'white',
-                    height: '100%',
+                    width: "1px",
+                    backgroundColor: "white",
+                    height: "100%",
                   }}
                 />
                 <span className="small text-center">Share on Google +</span>
@@ -228,16 +228,16 @@ function SocialShareIcons() {
             <div className="row">
               <div
                 className="btn btn-facebook w-100 text-white d-flex align-items-center"
-                style={{ justifyContent: 'space-evenly' }}
+                style={{ justifyContent: "space-evenly" }}
               >
                 <div>
                   <i className="fa fa-facebook" aria-hidden="true" />
                 </div>
                 <span
                   style={{
-                    width: '1px',
-                    backgroundColor: 'white',
-                    height: '100%',
+                    width: "1px",
+                    backgroundColor: "white",
+                    height: "100%",
                   }}
                 />
                 <span className="small text-center">Share on Facebook</span>
@@ -248,16 +248,16 @@ function SocialShareIcons() {
             <div className="row">
               <div
                 className="btn btn-twitter w-100 text-white d-flex align-items-center"
-                style={{ justifyContent: 'space-evenly' }}
+                style={{ justifyContent: "space-evenly" }}
               >
                 <div>
                   <i className="fa fa-twitter" aria-hidden="true" />
                 </div>
                 <span
                   style={{
-                    width: '1px',
-                    backgroundColor: 'white',
-                    height: '100%',
+                    width: "1px",
+                    backgroundColor: "white",
+                    height: "100%",
                   }}
                 />
                 <span className="small text-center">Share on Twitter</span>
@@ -268,16 +268,16 @@ function SocialShareIcons() {
             <div className="row">
               <div
                 className="btn btn-whatsapp w-100 text-center text-white d-flex align-items-center"
-                style={{ justifyContent: 'space-evenly' }}
+                style={{ justifyContent: "space-evenly" }}
               >
                 <div>
                   <i className="fa fa-whatsapp " aria-hidden="true" />
                 </div>
                 <span
                   style={{
-                    width: '1px',
-                    backgroundColor: 'white',
-                    height: '100%',
+                    width: "1px",
+                    backgroundColor: "white",
+                    height: "100%",
                   }}
                 />
                 <span className="small  text-center">Share on Whatsapp</span>

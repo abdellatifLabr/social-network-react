@@ -1,10 +1,10 @@
-import React, { useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { Row, Col, CardColumns } from 'react-bootstrap';
-import { gql, useQuery } from '@apollo/client';
+import React, { useEffect } from "react";
+import { Link } from "react-router-dom";
+import { Row, Col, CardColumns } from "react-bootstrap";
+import { gql, useQuery } from "@apollo/client";
 
-import PostCard from '../components/PostCard';
-import Loading from '../components/Loading';
+import PostCard from "../components/PostCard";
+import Loading from "../components/Loading";
 
 const POSTS_QUERY = gql`
   query Posts {
