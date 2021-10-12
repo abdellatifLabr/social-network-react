@@ -9,6 +9,7 @@ const ProfilePage = lazy(() => import('./pages/ProfilePage'));
 const PostPage = lazy(() => import('./pages/PostPage'));
 const CreatePostPage = lazy(() => import('./pages/CreatePostPage'));
 const HomePage = lazy(() => import('./pages/HomePage'));
+const CommunityPage = lazy(() => import('./pages/CommunityPage'));
 
 const Routes = () => (
   <Suspense fallback={() => <Loading />}>
@@ -17,6 +18,7 @@ const Routes = () => (
       <Route path="/login" render={() => <LoginPage />} exact />
       <Route path="/register" render={() => <RegisterPage />} exact />
       <Route path="/profile" render={() => <ProfilePage />} exact />
+      <Route path="/community" render={() => <CommunityPage />} exact />
       <Route path="/profile/:id" render={() => <ProfilePage />} exact />
       <Route path="/post/create" render={() => <CreatePostPage />} exact />
       <Route path="/post/:id" render={() => <PostPage />} exact />
